@@ -43,58 +43,86 @@ const History = ({ contactHistory, setContactHistory }) => {
           onClick={() => {
             setShowAllHistory(true);
           }}
-          className="btn btn-success w-100 my-3"
+          className="w-full my-3 py-2.5 bg-gradient-to-r from-green-500 to-green-600 text-white font-medium rounded-lg hover:from-green-600 hover:to-green-700 transition duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50"
         >
-          Load More
+          Load More History
         </button>
       );
     }
   }
 
   return (
-    <div className="col-md-6 py-1">
-      <div className="d-flex justify-content-between align-items-center ">
-        <span className="fw-border-4 fs-4">History</span>
-        <button
-          onClick={clearHistory}
-          className="btn btn-outline-dark mx-1 d-flex"
+    <div className="w-full md:w-1/2 p-4 bg-white rounded-xl shadow-md">
+      <div className="flex justify-between items-center mb-4">
+        <span className="font-bold text-xl text-gray-800 flex items-center">
+          <i className="bi bi-clock-history mr-2 text-green-600"></i>
+          Recent History
+        </span>
+        {contactHistory.length > 0 && (
+          <button
+            onClick={clearHistory}
+            className="p-2 border border-red-300 rounded-lg hover:bg-red-50 transition duration-300 flex items-center text-red-500 hover:text-red-600"
+            title="Clear All History"
+          >
+            <i className="bi bi-trash3"></i>
+          </button>
+        )}
+      </div>
+
+      {contactHistory.length === 0 ? (
+        <div className="text-center py-8 text-gray-500">
+          <i className="bi bi-inbox text-4xl mb-2 block"></i>
+          <p>No chat history yet</p>
+        </div>
+      ) : (
+        <div
+          className={`space-y-3 ${
+            contactHistory.length > 5
+              ? "max-h-[400px] overflow-y-auto pr-1"
+              : ""
+          }`}
         >
-          <i className="bi bi-trash3" />
-        </button>
-      </div>
+          {contactHistory.map((element, index) => {
+            return (
+              <div
+                key={index}
+                className="border border-gray-200 rounded-lg w-full p-3 hover:bg-gray-50 transition-all duration-300 shadow-sm hover:shadow"
+              >
+                <div className="flex justify-between items-center">
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href={`http://wa.me/${element.number}`}
+                    className="inline-flex items-center group w-3/4 py-1 text-green-600 hover:text-green-800 transition duration-300 font-medium"
+                  >
+                    <i className="bi bi-whatsapp text-lg mr-2"></i>
+                    <span className="truncate group-hover:underline">
+                      {element.name ? element.name : element.number}
+                    </span>
+                  </a>
 
-      <div>
-        {limitedContactHistory.map((element, index) => {
-          return (
-            <div key={index} className="btn btn-outline-dark w-100 my-2">
-              <div>
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href={`http://wa.me/${element.number}`}
-                  className="btn btn-outline-success btn-sm border-0 w-75"
-                >
-                  <i className="bi bi-whatsapp mx-3" />
-                  <span>{element.name?element.name:element.number}</span>
-                </a>
-
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    clearIndividualChatHistory(element);
-                  }}
-                  value={element}
-                  className="btn btn-outline-danger btn-sm border-0 float-end w-25"
-                >
-                  <i className="bi bi-trash3" />
-                </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      clearIndividualChatHistory(element);
+                    }}
+                    value={element}
+                    className="flex items-center justify-center w-8 h-8 rounded-full text-red-400 hover:text-red-600 hover:bg-red-50 transition duration-300"
+                    title="Remove from history"
+                  >
+                    <i className="bi bi-trash3"></i>
+                  </button>
+                </div>
+                <time className="text-xs text-gray-500 block mt-1">
+                  <i className="bi bi-calendar-event mr-1"></i>
+                  {element.timedate}
+                </time>
               </div>
-              <time style={{ fontSize: "12px" }}>{element.timedate}</time>
-            </div>
-          );
-        })}
-        {loadMoreButton}
-      </div>
+            );
+          })}
+          {loadMoreButton}
+        </div>
+      )}
     </div>
   );
 };

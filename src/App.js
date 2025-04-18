@@ -18,30 +18,48 @@ function App() {
   }, []);
 
   return (
-    <React.Fragment>
+    <div className="min-h-screen bg-gradient-to-br from-green-50 to-gray-100">
       <Navbar />
-      <div className="container">
-        <div className="row py-5 my-5 text-center bg-white bg-opacity-50 rounded">
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
+              WhatsApp Direct Messenger
+            </h1>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Chat with anyone on WhatsApp without saving their contact first.
+              Simply enter their number, start chatting, and optionally save
+              contacts for future use.
+            </p>
+          </div>
+
           <MainForm
             setContactHistory={setContactHistory}
             setYourContacts={setYourContacts}
           />
-          <div className="col-lg-6 py-3">
-            <div className="row">
-              <History
-                contactHistory={contactHistory}
-                setContactHistory={setContactHistory}
-              />
-              <Contacts
-                yourContacts={yourContacts}
-                setYourContacts={setYourContacts}
-                setContactHistory={setContactHistory}
-              />
-            </div>
+
+          <div className="flex flex-col md:flex-row gap-6">
+            <History
+              contactHistory={contactHistory}
+              setContactHistory={setContactHistory}
+            />
+            <Contacts
+              yourContacts={yourContacts}
+              setYourContacts={setYourContacts}
+              setContactHistory={setContactHistory}
+            />
           </div>
+
+          <footer className="mt-12 text-center text-gray-500 text-sm py-4">
+            <p>WhatsApp Direct Messenger • Chat without saving contacts</p>
+            <p className="mt-1">
+              Made with <span className="text-red-500">♥</span> for easier
+              messaging
+            </p>
+          </footer>
         </div>
       </div>
-    </React.Fragment>
+    </div>
   );
 }
 
