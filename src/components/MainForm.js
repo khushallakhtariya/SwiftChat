@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { saveHistory } from "../utils/contactUtils";
 
 const MainForm = ({ setContactHistory, setYourContacts }) => {
